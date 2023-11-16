@@ -48,6 +48,11 @@ class MovieService {
     }
     
     static func getMovieDetails(movieId: Int, completion: @escaping (Result<MovieDetails, Error>) -> Void) {
+        guard hasInternetAccess() else {
+            completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "No internet access"])))
+            return
+        }
+        
         guard let url = URL(string: "\(baseURL)/movie/\(movieId)?language=en-US") else {
             completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Invalid URL"])))
             return

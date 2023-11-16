@@ -55,7 +55,7 @@ class MovieDetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
-        self.setupViews()
+        self.setupUI()
         self.updateUI(with: viewModel.getMovieDetails())
         self.navigationController?.view.backgroundColor = UIColor.white
     }
@@ -77,7 +77,7 @@ class MovieDetailsViewController: UIViewController {
     }
     
     
-    func setupViews() {
+    func setupUI() {
         edgesForExtendedLayout = []
 
         let scrollView = UIScrollView()

@@ -18,7 +18,7 @@ class MovieTableViewCell: UITableViewCell {
         return label
     }()
     
-    var yearLabel: UILabel = {
+    private var yearLabel: UILabel = {
         let label = UILabel()
         label.textColor = UIColor.black
         label.font = UIFont.boldSystemFont(ofSize: 16)
@@ -27,7 +27,7 @@ class MovieTableViewCell: UITableViewCell {
         return label
     }()
     
-    var stackView: UIStackView = {
+    private var stackView: UIStackView = {
         let view = UIStackView()
         view.alignment = .fill
         view.distribution = .fill
@@ -35,7 +35,7 @@ class MovieTableViewCell: UITableViewCell {
         return view
     }()
     
-    var movieImageView: UIImageView = {
+    private var movieImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
