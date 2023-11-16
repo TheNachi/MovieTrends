@@ -54,8 +54,8 @@ class MovieDetailsViewModelTests: XCTestCase {
     }
     
     func testFetchMovieDetailsCompletionHandlerFailure() {
-        let expectedError = NSError(domain: "test", code: 500, userInfo: nil)
-        
+        let expectedError = NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "No internet access"])
+
         viewModel.fetchMovieDetails { result in
             switch result {
             case .success:
@@ -65,6 +65,4 @@ class MovieDetailsViewModelTests: XCTestCase {
             }
         }
     }
-    
-    
 }
