@@ -14,7 +14,7 @@ class MovieDetailsViewModel {
     init(movieId: Int) {
         self.movieId = movieId
     }
-
+    
     func fetchMovieDetails(completion: @escaping (Result<MovieDetails, Error>) -> Void) {
         MovieService.getMovieDetails(movieId: movieId) { [weak self] result in
             switch result {
@@ -24,15 +24,15 @@ class MovieDetailsViewModel {
             case .failure:
                 completion(result)
             }
-        
+            
         }
     }
     
-    private func handleSuccess(movieDetails: MovieDetails) {
+    public func handleSuccess(movieDetails: MovieDetails) {
         self.movieDetails = movieDetails
         
     }
-
+    
     func getMovieDetails() -> MovieDetails? {
         return movieDetails
     }

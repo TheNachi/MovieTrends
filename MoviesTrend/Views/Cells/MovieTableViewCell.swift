@@ -22,7 +22,7 @@ class MovieTableViewCell: UITableViewCell {
         let label = UILabel()
         label.textColor = UIColor.black
         label.font = UIFont.boldSystemFont(ofSize: 16)
-        label.backgroundColor = UIColor.priceLabelBackgroundColor
+        label.backgroundColor = UIColor.yearLabelBackgroundColor
         label.textAlignment = .center
         return label
     }()
@@ -52,9 +52,8 @@ class MovieTableViewCell: UITableViewCell {
     }
     
     private func setupUI() {
-        self.contentView.backgroundColor = UIColor.white // Set the background color
+        self.contentView.backgroundColor = UIColor.white
         
-        // Add corner radius and shadow
         self.contentView.layer.cornerRadius = 10
         self.contentView.layer.masksToBounds = false
         self.contentView.layer.shadowColor = UIColor.black.cgColor
@@ -62,7 +61,6 @@ class MovieTableViewCell: UITableViewCell {
         self.contentView.layer.shadowOffset = CGSize(width: 0, height: 2)
         self.contentView.layer.shadowRadius = 5
         
-        // Add padding
         self.contentView.layoutMargins = UIEdgeInsets(top: cellPadding, left: cellPadding, bottom: cellPadding, right: cellPadding)
         
         self.contentView.addSubview(stackView)
@@ -94,8 +92,8 @@ class MovieTableViewCell: UITableViewCell {
     
     func configure(with movie: Movie) {
         let year = movie.release_date.prefix(4)
-             yearLabel.text = String(year)
-         
+        yearLabel.text = String(year)
+        
         if let movieUrl = movie.posterPathURL() {
             preloadImage(from: movieUrl)
         }

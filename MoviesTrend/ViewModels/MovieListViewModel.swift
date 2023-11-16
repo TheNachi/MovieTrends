@@ -8,10 +8,11 @@
 import Foundation
 
 class MovieListViewModel {
-    private var movies: [Movie] = []
+    public var movies: [Movie] = []
+    public var title = "Movie Trends"
+    public var tableCellReuseIdentifier = "MovieCell"
     private var currentPage = 1
     private var totalPages = 1
-    
     var updateHandler: (() -> Void)?
     var errorHandler: ((Error?) -> Void)?
     
@@ -30,7 +31,7 @@ class MovieListViewModel {
         }
     }
     
-    private func handleSuccess(movieData: MovieData) {
+    public func handleSuccess(movieData: MovieData) {
         self.movies.append(contentsOf: movieData.results)
         self.totalPages = movieData.total_pages
         self.currentPage += 1
@@ -40,7 +41,7 @@ class MovieListViewModel {
         }
     }
     
-    private func handleError(error: Error) {
+    public func handleError(error: Error) {
         DispatchQueue.main.async {
             self.errorHandler?(error)
         }
@@ -64,7 +65,7 @@ class MovieListViewModel {
             case .failure(let error):
                 self.handleError(error: error)
             }
-
+            
             
         }
     }

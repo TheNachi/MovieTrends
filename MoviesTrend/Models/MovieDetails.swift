@@ -60,3 +60,10 @@ struct MovieDetails: Codable {
         let name: String
     }
 }
+
+
+extension MovieDetails: Equatable {
+    static func == (lhs: MovieDetails, rhs: MovieDetails) -> Bool {
+        return lhs.id == rhs.id && lhs.title == rhs.title
+    }
+}

@@ -19,18 +19,17 @@ class MoviesListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.title = "Movie Trends"
-        setupUI()
-        setupViewModel()
-        
-        viewModel.fetchTrendingMovies()
+        self.navigationItem.title = viewModel.title
+        self.setupUI()
+        self.setupViewModel()
+        self.viewModel.fetchTrendingMovies()
     }
     
     private func setupUI() {
         view.addSubview(tableView)
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.register(MovieTableViewCell.self, forCellReuseIdentifier: "MovieCell")
+        tableView.register(MovieTableViewCell.self, forCellReuseIdentifier: viewModel.tableCellReuseIdentifier)
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.topAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
@@ -80,28 +79,28 @@ extension MoviesListViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.numberOfMovies()
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "MovieCell", for: indexPath) as! MovieTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: viewModel.tableCellReuseIdentifier, for: indexPath) as! MovieTableViewCell
         let movie = viewModel.movie(at: indexPath.row)
         cell.configure(with: movie)
-
+        
         if indexPath.row == viewModel.numberOfMovies() - 1 {
             viewModel.fetchTrendingMovies()
         }
-
+        
         return cell
     }
-
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         didSelectMovie(at: indexPath)
     }
-
+    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let offsetY = scrollView.contentOffset.y
         let contentHeight = scrollView.contentSize.height
         let height = scrollView.frame.size.height
-
+        
         if offsetY > contentHeight - height {
             viewModel.fetchTrendingMovies()
         }
