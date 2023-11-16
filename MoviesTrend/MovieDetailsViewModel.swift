@@ -10,16 +10,27 @@ import Foundation
 class MovieDetailsViewModel {
     private let movieId: Int
     private var movieDetails: MovieDetails?
-
+    
     init(movieId: Int) {
         self.movieId = movieId
     }
 
-    func fetchMovieDetails(completion: @escaping (MovieDetails?) -> Void) {
-        MovieService.getMovieDetails(movieId: movieId) { [weak self] movieDetails in
-            self?.movieDetails = movieDetails
-            completion(movieDetails)
+    func fetchMovieDetails(completion: @escaping (Result<MovieDetails, Error>) -> Void) {
+        MovieService.getMovieDetails(movieId: movieId) { [weak self] result in
+            switch result {
+            case .success(let movieDetails):
+                self?.handleSuccess(movieDetails: movieDetails)
+                completion(result)
+            case .failure:
+                completion(result)
+            }
+        
         }
+    }
+    
+    private func handleSuccess(movieDetails: MovieDetails) {
+        self.movieDetails = movieDetails
+        
     }
 
     func getMovieDetails() -> MovieDetails? {

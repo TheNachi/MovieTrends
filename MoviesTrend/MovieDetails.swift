@@ -35,7 +35,6 @@ struct MovieDetails: Codable {
     let vote_count: Int
 
     struct Collection: Codable {
-        // Properties related to the collection, if needed
     }
 
     struct Genre: Codable {

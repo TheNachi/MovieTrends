@@ -10,21 +10,30 @@ import UIKit
 class MovieDetailsViewController: UIViewController {
 
     
-    var priceLabel: UILabel = {
+    var movieTitleLabel: UILabel = {
         let label = UILabel()
         label.textColor = UIColor.blue
         label.textAlignment = .center
-        label.font = UIFont.systemFont(ofSize: 18)
+        label.numberOfLines = 0
+        label.font = UIFont.boldSystemFont(ofSize: 18)
         return label
     }()
     
-    var productImageView: UIImageView = {
+    var movieYearLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = UIColor.blue
+        label.textAlignment = .center
+        label.font = UIFont.boldSystemFont(ofSize: 14)
+        return label
+    }()
+    
+    var movieImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
     
-    var descriptionLabel: UILabel = {
+    var movieOverviewLabel: UILabel = {
         let label = UILabel()
         label.textColor = UIColor.black
         label.numberOfLines = 0
@@ -48,8 +57,7 @@ class MovieDetailsViewController: UIViewController {
         self.view.backgroundColor = .white
         self.setupViews()
         self.updateUI(with: viewModel.getMovieDetails())
-        self.navigationController?.navigationBar.barTintColor = UIColor.navigationBackgroundColor
-        
+        self.navigationController?.navigationBar.barTintColor = UIColor.white
     }
     
     private func updateUI(with movieDetails: MovieDetails?) {
@@ -58,42 +66,51 @@ class MovieDetailsViewController: UIViewController {
             return
         }
 
-        // Update UI elements with movieDetails data
-        priceLabel.text = movieDetails.original_title
-        descriptionLabel.text = movieDetails.overview
+        let year = movieDetails.release_date.prefix(4)
+        
+        movieTitleLabel.text = movieDetails.original_title
+        movieYearLabel.text = String(year)
+        movieOverviewLabel.text = movieDetails.overview
 
         if let imageUrl = MovieService.getImageURL(path: movieDetails.poster_path) {
-            productImageView.load(url: imageUrl)
+            movieImageView.load(url: imageUrl)
         }
     }
     
     
     func setupViews() {
         edgesForExtendedLayout = []
-        self.view.addSubview(productImageView)
-        self.view.addSubview(descriptionLabel)
-        self.view.addSubview(priceLabel)
+        self.view.addSubview(movieImageView)
+        self.view.addSubview(movieOverviewLabel)
+        self.view.addSubview(movieTitleLabel)
+        self.view.addSubview(movieYearLabel)
         
-        self.productImageView.translatesAutoresizingMaskIntoConstraints = false
-        self.descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
-        self.priceLabel.translatesAutoresizingMaskIntoConstraints = false
+        self.movieImageView.translatesAutoresizingMaskIntoConstraints = false
+        self.movieOverviewLabel.translatesAutoresizingMaskIntoConstraints = false
+        self.movieTitleLabel.translatesAutoresizingMaskIntoConstraints = false
+        self.movieYearLabel.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            productImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            productImageView.heightAnchor.constraint(equalToConstant: 300),
-            productImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            productImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            productImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 40),
+            movieImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            movieImageView.heightAnchor.constraint(equalToConstant: 300),
+            movieImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            movieImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            movieImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 40),
             
-            priceLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            priceLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            priceLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            priceLabel.topAnchor.constraint(equalTo: productImageView.bottomAnchor, constant: 20),
+            movieTitleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            movieTitleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            movieTitleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            movieTitleLabel.topAnchor.constraint(equalTo: movieImageView.bottomAnchor, constant: 20),
             
-            descriptionLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            descriptionLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            descriptionLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            descriptionLabel.topAnchor.constraint(equalTo: priceLabel.bottomAnchor, constant: 20),
+            movieYearLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            movieYearLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            movieYearLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            movieYearLabel.topAnchor.constraint(equalTo: movieTitleLabel.bottomAnchor, constant: 5),
+            
+            movieOverviewLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            movieOverviewLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            movieOverviewLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            movieOverviewLabel.topAnchor.constraint(equalTo: movieYearLabel.bottomAnchor, constant: 20),
             
         ])
     }
