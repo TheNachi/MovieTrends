@@ -32,7 +32,7 @@ To get started with MoviesTrend, follow the installation instructions in the nex
 
 1. Clone the repository to your local machine.
    
-   git clone https://github.com/your-username/MoviesTrend.git
+   git clone https://github.com/TheNachi/MoviesTrend.git
 
 3. Open the project in Xcode.
 
